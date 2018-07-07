@@ -2,7 +2,6 @@ import java.util.Random;
 
 /**
  * Card Deck
- * <p>
  * CST 338 - M3 Deck of Cards
  *
  * @author Thomas Krause
