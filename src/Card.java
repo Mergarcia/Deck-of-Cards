@@ -139,6 +139,7 @@ public class Card {
     */
    public boolean equals(Card card) {
       return this.value == card.getValue()
-         && this.suit == card.getSuit();
+         && this.suit == card.getSuit()
+         && this.getErrorFlag() == card.getErrorFlag();
    }
 }

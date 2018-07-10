@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /*************************************
  Name: Eric Ybarra, Mercedes Garcia
  Thomas Krause, William Barajas
@@ -5,18 +7,83 @@
  CST 338 - "Deck of Cards"
  This program simulates a card game
  with the use of three classes: Card,
- Hand, & Deck. We use inheritance to
- incorporate all these classes into
- one program.
+ Hand, & Deck.
 
  *************************************/
-public class Main {
+public class Assig3 {
    public static void main(String[] args) {
+      // Here we use some helper methods to test
+      // each of the different sections of the program.
       testCard();
       testHand();
       testDeck();
+
+      testIntegration();
    }
 
+   /**
+    * Tests the integration between Deck and Hand
+    */
+   private static void testIntegration() {
+      Scanner input = new Scanner(System.in);
+
+      // Ensure the user enters a valid number
+      int count;
+      do {
+         System.out.print("How many hands? (1 - 10, please): ");
+         count = input.nextInt();
+      } while(count < 1 || count > 10);
+
+      // Create the hands and deck
+      Deck deck = new Deck();
+      Hand hands[] = new Hand[count];
+
+      for (int i = 0; i < count; i++) {
+         hands[i] = new Hand();
+      }
+
+      // Use the helper to deal to each of the hands
+      dealToHands(deck, hands);
+
+      // Output unshuffled
+      System.out.println("Here are our hands, from unshuffled deck:");
+      for (Hand hand : hands) {
+         System.out.println(hand + "\n");
+      }
+
+      // Reset the variables
+      deck.init();
+      deck.shuffle();
+      for (Hand hand : hands) {
+         hand.resetHand();
+      }
+
+      // Deal from the shuffled deck this time
+      dealToHands(deck, hands);
+
+      // Output shuffled
+      System.out.println("Here are our hands, from SHUFFLED deck:");
+      for (Hand hand : hands) {
+         System.out.println(hand + "\n");
+      }
+   }
+
+   private static void dealToHands(Deck deck, Hand[] hands) {
+      // Deal until we are told to leave
+      while (true) {
+         // Fill up each hand
+         for (Hand hand : hands) {
+            // If there was an error stop dealing
+            if (! hand.takeCard(deck.dealCard())) {
+               return;
+            }
+         }
+      }
+   }
+
+   /**
+    * Tests the card class
+    */
    private static void testCard() {
       System.out.println("/* ---------- TEST CARD ---------- */");
 
