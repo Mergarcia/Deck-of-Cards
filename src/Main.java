@@ -12,13 +12,63 @@
  *************************************/
 public class Main {
    public static void main(String[] args) {
+      testHand();
       testDeck();
+   }
+
+   /**
+    * Tests the hand class
+    */
+   private static void testHand() {
+      System.out.println("/* ---------- TEST HAND ---------- */");
+      Hand hand = new Hand();
+      Card[] templates = {
+         new Card('A', Card.Suit.spades),
+         new Card('9', Card.Suit.hearts),
+         new Card('2', Card.Suit.clubs),
+         new Card('6', Card.Suit.diamonds),
+         new Card('T', Card.Suit.spades),
+      };
+
+      // Add cards from the template until error
+      boolean run = true;
+      while (run) {
+         for (Card card : templates) {
+            if (! (run = hand.takeCard(card)))
+               break;
+         }
+      }
+
+      System.out.println("Hand full\nAfter deal");
+      System.out.println(hand);
+
+      System.out.println("\nTesting inspectCard()");
+      // Legal
+      System.out.println(hand.inspectCard(5));
+      // Illegal
+      System.out.println(hand.inspectCard(500));
+
+      // Testing playCard
+      System.out.println("\nTesting playCard()");
+      Card card;
+
+      // Play cards until we run out
+      do {
+         card = hand.playCard();
+         if (! card.getErrorFlag())
+            System.out.println("Playing " + card);
+      }
+      while (! card.getErrorFlag());
+
+      System.out.println("\nAfter playing all cards");
+      System.out.println(hand);
    }
 
    /**
     * Tests the deck class
     */
    private static void testDeck() {
+      System.out.println("\n/* ---------- TEST DECK ---------- */");
       // Deck Class Test
       Deck deck = new Deck(2);
       dealDeck(deck);
@@ -44,7 +94,7 @@ public class Main {
     */
    private static void dealDeck(Deck deck) {
       Card card;
-      while (!(card = deck.dealCard()).isErrorFlag()) {
+      while (!(card = deck.dealCard()).getErrorFlag()) {
          System.out.print(card + " / ");
       }
 

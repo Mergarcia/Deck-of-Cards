@@ -6,7 +6,12 @@
  * @version 1.1
  */
 public class Card {
-   public enum Suit { Clubs, Diamonds, Hearts, Spades };
+   private static final char[] validCardValues = {
+      'A', '1', '2', '3', '4', '5', '6',
+      '7', '8', '9', 'T', 'J', 'Q', 'K'
+   };
+
+   public enum Suit { clubs, diamonds, hearts, spades }
 
    private char value;
    private Suit suit;
@@ -16,7 +21,7 @@ public class Card {
     * Default constructor for the card class
     */
    public Card() {
-      this('A', Suit.Spades);
+      this('A', Suit.spades);
    }
 
    /**
@@ -38,6 +43,15 @@ public class Card {
       this.errorFlag = errorFlag;
    }
 
+   /**
+    * Copy constructor for card.
+    *
+    * @param card
+    */
+   public Card(Card card) {
+      this.set(card.getValue(), card.getSuit());
+   }
+
    //region Mutators
 
    /**
@@ -49,7 +63,8 @@ public class Card {
     */
    public boolean set(char value, Suit suit) {
       // If there is no error, set the values
-      if (! (errorFlag = isValid(value, suit))) {
+      errorFlag = ! isValid(value, suit);
+      if (! errorFlag) {
          this.value = value;
          this.suit = suit;
       }
@@ -86,6 +101,22 @@ public class Card {
    public boolean getErrorFlag() {
       return errorFlag;
    }
+
+   /**
+    * Determines if the card is valid.
+    *
+    * @param value
+    * @param suit
+    * @return valid
+    */
+   public boolean isValid(char value, Suit suit) {
+      for (char c : validCardValues) {
+         if (value == c)
+            return true;
+      }
+
+      return false;
+   }
    //endregion
 
    /**
@@ -95,7 +126,7 @@ public class Card {
     */
    public String toString() {
       if (errorFlag)
-         return "[Invalid]";
+         return "** illegal **";
 
       return String.format("%s of %s", value, suit);
    }
@@ -109,24 +140,5 @@ public class Card {
    public boolean equals(Card card) {
       return this.value == card.getValue()
          && this.suit == card.getSuit();
-   }
-
-   /**
-    * Determines if the card is valid.
-    *
-    * @param value
-    * @param suit
-    * @return valid
-    */
-   public boolean isValid(char value, Suit suit) {
-      char[] values = {'A', '1', '2', '3', '4', '5', '6',
-         '7', '8', '9', 'T', 'J', 'Q', 'K'};
-
-      for (char c : values) {
-         if (value == c)
-            return true;
-      }
-
-      return false;
    }
 }
