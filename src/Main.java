@@ -12,15 +12,37 @@
  *************************************/
 public class Main {
    public static void main(String[] args) {
+      testCard();
       testHand();
       testDeck();
+   }
+
+   private static void testCard() {
+      System.out.println("/* ---------- TEST CARD ---------- */");
+
+      Card card1 = new Card('A', Card.Suit.spades);
+      // One illegal card
+      Card card2 = new Card('H', Card.Suit.hearts);
+      Card card3 = new Card('J', Card.Suit.clubs);
+
+      System.out.println(card1);
+      System.out.println(card2);
+      System.out.println(card3 + "\n");
+
+      // Make first card illegal and illegal card legal
+      card1.set('G', Card.Suit.diamonds);
+      card2.set('Q', Card.Suit.spades);
+
+      System.out.println(card1);
+      System.out.println(card2);
+      System.out.println(card3);
    }
 
    /**
     * Tests the hand class
     */
    private static void testHand() {
-      System.out.println("/* ---------- TEST HAND ---------- */");
+      System.out.println("\n/* ---------- TEST HAND ---------- */");
       Hand hand = new Hand();
       Card[] templates = {
          new Card('A', Card.Suit.spades),
