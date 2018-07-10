@@ -2,8 +2,8 @@
  * Hand
  * CST 338 - M3 Deck of Cards
  *
- * @author Eric Ybarra, Willan Barajas
- * @version 1.0
+ * @author Eric Ybarra, Willan Barajas, Thomas Krause
+ * @version 1.1
  */
 public class Hand
 {

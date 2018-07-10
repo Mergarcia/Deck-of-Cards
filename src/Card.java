@@ -3,7 +3,7 @@
  * CST 338 - M3 Deck of Cards
  *
  * @author Thomas Krause, Mercedes Garcia
- * @version 1.1
+ * @version 1.2
  */
 public class Card {
    private static final char[] validCardValues = {
